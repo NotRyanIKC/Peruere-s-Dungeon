@@ -22,7 +22,7 @@ typedef struct {
     
 void GenerateMap1(char mapa[13][13],int PlayerX, int PlayerY) {
     // Layout do mapa em forma de array de strings
-
+    int i,j;
     char layout[13][13] = {
         "\t\t\t#########",
         "\t\t\t##     ##",
@@ -37,8 +37,8 @@ void GenerateMap1(char mapa[13][13],int PlayerX, int PlayerY) {
     };
 
     // Copiando o layout para o mapa do jogo
-    for (int i = 0; i < 13; i++){
-        for (int j = 0; j < 13; j++){
+    for (i = 0; i < 13; i++){
+        for (j = 0; j < 13; j++){
             mapa[i][j] = layout[i][j];
         }
     }
@@ -46,8 +46,9 @@ void GenerateMap1(char mapa[13][13],int PlayerX, int PlayerY) {
 };
 
 void PrintMap(char mapa[13][13]){
-    for (int i = 0; i < 13; i++){
-        for (int j = 0; j < 13; j++){
+    int i,j;
+    for (i = 0; i < 13; i++){
+        for (j = 0; j < 13; j++){
             printf("%c", mapa[i][j]);
         }
         printf("\n");
@@ -67,6 +68,10 @@ void PrintTuto(){
     Esteja atento com inimigos e obstaculos identificados como 'X' (inimigo nivel 1),'V' (inimigo nivel 2) e '#' (Espinhos).\n\
     Caso encoste em algum desses inimigos ou obstaculos a fase sera reiniciada.\n\n\
     Obs: Aperte o botao ('O') encontrado em alguma fase e descubra algo secreto :)\n");
+
+    printf("\nPressione qualquer tecla para voltar ao menu...\n");
+    getch();
+    system("cls");
 
 }
 
@@ -100,7 +105,7 @@ void sair(){
     exit(0);
 }
 
-void Interact(char mapa[13][13], int PlayerX, int PlayerY) {
+/*void Interact(char mapa[13][13], int PlayerX, int PlayerY) {
     // Verifica se o jogador está próximo ao objeto '@' em qualquer direção
 for (int i = PlayerY - 1; i <= PlayerY + 1; i++) {
     for (int j = PlayerX - 1; j <= PlayerX + 1; j++) {
@@ -139,7 +144,7 @@ for (int i = PlayerY - 1; i <= PlayerY + 1; i++) {
         printf("Nada para interagir aqui.\n");
     }
 }
-
+*/
 
 
 
@@ -182,7 +187,6 @@ void GameStart(){
                 break;
             case 'I':
             case 'i':
-                Interact(mapa, PlayerX, PlayerY);
                 break;
         }
         system("cls");
@@ -195,21 +199,34 @@ void GameStart(){
 
 int main(){ // corrigir o bug do infinito
     int option; 
+    bool tutorial = false; 
     printf("\n\n");
     printf("\t\t\t88^^Yb 888888 88^^Yb 88   88 888888 88^^Yb 888888  .o. .dP'Y8   8888b. 88   88 88b 88  dP^^b8  888888  dP^Yb  88b 88\n");
     printf("\t\t\t88__dP 88__   88__dP 88   88 88__   88__dP 88__   ,dP' `Ybo.'   8I  Yb 88   88 88Yb88  dP   `' 88__   dP   Yb 88Yb88\n");
     printf("\t\t\t88^^^  88^^   88^^Yb Y8   8P 88^^   88^^Yb 88^^        o.`Y8b   8I  dY Y8   8P 88 Y88  Yb  ^88 88^^   Yb   dP 88 Y88\n");
     printf("\t\t\t88     888888 88  Yb ^YbodP^ 888888 88  Yb 888888      8bodP^   8888Y' `YbodP' 88  Y8  YboodP  888888  YbodP  88  Y8\n");
     printf("\n\n");
-    printf("\t1 - Jogar\n\t2 -Tutorial\n\t3 - Sair\n");
-    scanf("%d",&option);
     do{
+        printf("\t1 - Jogar\n\t2 -Tutorial\n\t3 - Sair\n");
+        scanf("%d",&option);
+        system("cls");
+
         switch(option){
             case 1:
                 GameStart();// Iniciar o Jogo
                 break;
             case 2:
-                PrintTuto();// Abrir o Tutorial
+                system("cls");
+                PrintTuto();
+                if(!tutorial){
+                    tutorial = true;
+                }
+                printf("\n\n");
+                printf("\t\t\t88^^Yb 888888 88^^Yb 88   88 888888 88^^Yb 888888  .o. .dP'Y8   8888b. 88   88 88b 88  dP^^b8  888888  dP^Yb  88b 88\n");
+                printf("\t\t\t88__dP 88__   88__dP 88   88 88__   88__dP 88__   ,dP' `Ybo.'   8I  Yb 88   88 88Yb88  dP   `' 88__   dP   Yb 88Yb88\n");
+                printf("\t\t\t88^^^  88^^   88^^Yb Y8   8P 88^^   88^^Yb 88^^        o.`Y8b   8I  dY Y8   8P 88 Y88  Yb  ^88 88^^   Yb   dP 88 Y88\n");
+                printf("\t\t\t88     888888 88  Yb ^YbodP^ 888888 88  Yb 888888      8bodP^   8888Y' `YbodP' 88  Y8  YboodP  888888  YbodP  88  Y8\n");
+                printf("\n\n");
                 break;
             case 3:
                 sair();//Sair do Jogo
@@ -217,7 +234,7 @@ int main(){ // corrigir o bug do infinito
             default:
                 printf("Opção invalida.");
         }
-    }while(option);
+    }while(option != 3);
     getch();
     return 0;
 }
