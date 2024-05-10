@@ -1,11 +1,8 @@
-// criar o sair
-// ideia do botão gritar BAZINGA, gritar KURURIN, konami code (se vc errar a memoria ram do seu pc conseme 64gb, se vc acertar ele n desliga)
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h> // manipular bool
 #include <string.h> //manipular string
-#include <conio.h> // fodase
+#include <conio.h> //
 
 typedef struct {
    bool vivo;
@@ -23,6 +20,27 @@ typedef struct {
 void GenerateMap1(char mapa[13][13],int PlayerX, int PlayerY) {
     // Layout do mapa em forma de array de strings
     int i,j;
+    char layout2[23][23] = {
+		"\t\t\t####################",
+		"\t\t\t##				  #",
+		"\t\t\t#				  #",
+		"\t\t\t#   			      #",
+		"\t\t\t#		 	      #",
+		"\t\t\t#		 	      #",
+		"\t\t\t#			      #",
+		"\t\t\t#			      #",
+		"\t\t\t#			      #",
+		"\t\t\t#			      #",
+		"\t\t\t#			      #",
+		"\t\t\t#			      #",
+		"\t\t\t#			      #",
+		"\t\t\t#			      #",
+		"\t\t\t#			      #",
+		"\t\t\t#			      #",
+		"\t\t\t#			      #",
+		"\t\t\t##			     ##",
+		"\t\t\t####################",
+		}
     char layout[13][13] = {
         "\t\t\t#########",
         "\t\t\t##     ##",
@@ -145,7 +163,10 @@ for (int i = PlayerY - 1; i <= PlayerY + 1; i++) {
     }
 }
 */
-void Interact(mapa,PlayerX,PlayerY){
+void Interact(){
+	char mapa[13][13];
+	int PlayerX;
+	int PlayerY;
     if (mapa[PlayerY][PlayerX] == '@') {
         mapa[PlayerY][PlayerX] = ' '; // Remove o '@' do mapa
         printf("Voce pegou a chave '@'!\n");
