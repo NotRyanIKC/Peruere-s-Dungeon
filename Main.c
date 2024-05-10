@@ -96,8 +96,8 @@ void PlayerSettingsBase(){ // função só para facilitar o reset do game
     } else {
         printf("O jogador %s esta morto.\n", newPlayer.nome);
     }
-}
-*/
+}*/
+
 
 
 void sair(){
@@ -145,9 +145,14 @@ for (int i = PlayerY - 1; i <= PlayerY + 1; i++) {
     }
 }
 */
+void Interact(mapa,PlayerX,PlayerY){
+    if (mapa[PlayerY][PlayerX] == '@') {
+        mapa[PlayerY][PlayerX] = ' '; // Remove o '@' do mapa
+        printf("Voce pegou a chave '@'!\n");
+    }
+}
 
-
-
+// coordenada do objeto = x 7 e y 5
 void GameStart(){
     int PlayerX = 5; // Coordenada X inicial do jogador
     int PlayerY = 5; // Coordenada Y inicial do jogador
@@ -187,6 +192,7 @@ void GameStart(){
                 break;
             case 'I':
             case 'i':
+            	interact(mapa, PlayerX, PlayerY);
                 break;
         }
         system("cls");
@@ -214,6 +220,7 @@ int main(){ // corrigir o bug do infinito
         switch(option){
             case 1:
                 GameStart();// Iniciar o Jogo
+                charcreation();
                 break;
             case 2:
                 system("cls");
