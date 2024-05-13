@@ -5,68 +5,107 @@
 #include <conio.h> //
 
 typedef struct {
-   bool vivo;
-   
-   char nome[16];// permite um nome de ate 16 caracteres
-   int hp;
 
-   int PlayerX;
-   int PlayerY;
+    bool vivo;
+   
+    char nome[16];// permite um nome de ate 16 caracteres
+    int hp;
+
+    int PlayerX;
+    int PlayerY;
+    int ChaveY;
+    int ChaveX;
 
 }player;
     int continuar = 1;
     player newPlayer; //declaro a existencia do player
-    
-void GenerateMap1(char mapa[13][13],int PlayerX, int PlayerY) {
+//void GenerateMap2(char mapa[23][23],int PlayerX, int PlayerY,int ChaveY,int ChaveX) {
+    /*char layout2[23][23] = {
+		"\t\t\t********************",
+		"\t\t\t**		 *****#O#**",
+		"\t\t\t*		  ****	 **",
+		"\t\t\t*   		   ***  #**",
+		"\t\t\t*		 	**   **",
+		"\t\t\t*		 	 *#  **",
+		"\t\t\t*			      *",
+		"\t\t\t*			      *",
+		"\t\t\t*			      *",
+		"\t\t\t**			     **",
+		"\t\t\t***			X   ***",
+		"\t\t\t***			    ***",
+		"\t\t\t***			    ***",
+		"\t\t\t**			     **",
+		"\t\t\t*			      *",
+		"\t\t\t*	   *	 X    *",
+		"\t\t\t** ##  ***	      *",
+		"\t\t\t**D## *****	     **",
+		"\t\t\t********************",
+		};*/
+void GenerateMap1(char mapa[13][13],int PlayerX, int PlayerY,int ChaveY,int ChaveX) {
     // Layout do mapa em forma de array de strings
     int i,j;
-    char layout2[23][23] = {
-		"\t\t\t####################",
-		"\t\t\t##				  #",
-		"\t\t\t#				  #",
-		"\t\t\t#   			      #",
-		"\t\t\t#		 	      #",
-		"\t\t\t#		 	      #",
-		"\t\t\t#			      #",
-		"\t\t\t#			      #",
-		"\t\t\t#			      #",
-		"\t\t\t#			      #",
-		"\t\t\t#			      #",
-		"\t\t\t#			      #",
-		"\t\t\t#			      #",
-		"\t\t\t#			      #",
-		"\t\t\t#			      #",
-		"\t\t\t#			      #",
-		"\t\t\t#			      #",
-		"\t\t\t##			     ##",
-		"\t\t\t####################",
-		}
+    /*char layout2[23][23] = {
+		"\t\t\t********************",
+		"\t\t\t**		 *****#O#**",
+		"\t\t\t*		  ****	 **",
+		"\t\t\t*   		   ***  #**",
+		"\t\t\t*		 	**   **",
+		"\t\t\t*		 	 *#  **",
+		"\t\t\t*			      *",
+		"\t\t\t*			      *",
+		"\t\t\t*			      *",
+		"\t\t\t**			     **",
+		"\t\t\t***			X   ***",
+		"\t\t\t***			    ***",
+		"\t\t\t***			    ***",
+		"\t\t\t**			     **",
+		"\t\t\t*			      *",
+		"\t\t\t*	   *	 X    *",
+		"\t\t\t** ##  ***	      *",
+		"\t\t\t**D## *****	     **",
+		"\t\t\t********************",
+		};*/
     char layout[13][13] = {
-        "\t\t\t#########",
-        "\t\t\t##     ##",
-        "\t\t\t#       #",
-        "\t\t\t#       #",
-        "\t\t\t#  ######",
-        "\t\t\t#  #@   #",
-        "\t\t\t#  ###  #",
-        "\t\t\t#  #D#  #",
-        "\t\t\t#       #",
-        "\t\t\t#########"
+        "\t\t\t*********",
+        "\t\t\t**     **",
+        "\t\t\t*       *",
+        "\t\t\t*       *",
+        "\t\t\t*  ******",
+        "\t\t\t*  *    *",
+        "\t\t\t*  ***  *",
+        "\t\t\t*  *D*  *",
+        "\t\t\t*       *",
+        "\t\t\t*********",
     };
-
+    
+     
     // Copiando o layout para o mapa do jogo
     for (i = 0; i < 13; i++){
         for (j = 0; j < 13; j++){
-            mapa[i][j] = layout[i][j];
+            if (layout[i][j] == '@' && mapa[i][j]) {
+                mapa[i][j] = '@';
+            }else{
+                mapa[i][j] = layout[i][j];
+            }
         }
     }
     mapa[PlayerY][PlayerX] = '&';
+    mapa[ChaveY][ChaveX] = '@';
 };
 
 void PrintMap(char mapa[13][13]){
     int i,j;
     for (i = 0; i < 13; i++){
         for (j = 0; j < 13; j++){
+            printf("%c", mapa[i][j]);
+        }
+        printf("\n");
+    }
+};
+void PrintMap2(char mapa[13][13]){
+    int i,j;
+    for (i = 0; i < 23; i++){
+        for (j = 0; j < 23; j++){
             printf("%c", mapa[i][j]);
         }
         printf("\n");
@@ -123,7 +162,7 @@ void sair(){
     exit(0);
 }
 
-/*void Interact(char mapa[13][13], int PlayerX, int PlayerY) {
+/*void Interact(char mapa[13][13], int PlayerX, int PlayerY, int ChaveY, int ChaveX) {
     // Verifica se o jogador está próximo ao objeto '@' em qualquer direção
 for (int i = PlayerY - 1; i <= PlayerY + 1; i++) {
     for (int j = PlayerX - 1; j <= PlayerX + 1; j++) {
@@ -132,18 +171,17 @@ for (int i = PlayerY - 1; i <= PlayerY + 1; i++) {
             if (mapa[i][j] == '@') {
                 // Adicione este printf para verificar as coordenadas
                 printf("Encontrou '@' na posição [%d][%d]\n", i, j);
-
                 // Remove o '@' do mapa
-                mapa[i][j] = ' ';
+                mapa[ChaveY][ChaveX] = ' ';
                 interacted = true;
                 system("cls");
-                GenerateMap1(mapa, PlayerX, PlayerY);
+                GenerateMap1(mapa, PlayerX, PlayerY,ChaveY,ChaveX);
                 PrintMap(mapa);
             }
         }
     }
-}
-
+}*/
+/*
 }
 
     
@@ -163,69 +201,86 @@ for (int i = PlayerY - 1; i <= PlayerY + 1; i++) {
     }
 }
 */
-void Interact(){
-	char mapa[13][13];
-	int PlayerX;
-	int PlayerY;
-    if (mapa[PlayerY][PlayerX] == '@') {
-        mapa[PlayerY][PlayerX] = ' '; // Remove o '@' do mapa
+void Interact(char mapa[13][13], int PlayerX, int PlayerY, int ChaveY,int ChaveX){
+    int i,j;
+    if (PlayerX == ChaveX && PlayerY == ChaveY) {
+        mapa[ChaveY][ChaveX] = ' ';
         printf("Voce pegou a chave '@'!\n");
+        for (i = 0; i < 13; i++) {
+            for (j = 0; j < 13; j++) {
+                if (mapa[i][j] == 'D') {
+                    mapa[i][j] = '=';
+                }
+            }
+        }
     }
 }
 
-// coordenada do objeto = x 7 e y 5
+// coordenada do objeto = x 5 e y 7
 void GameStart(){
-    int PlayerX = 5; // Coordenada X inicial do jogador
-    int PlayerY = 5; // Coordenada Y inicial do jogador
+    int PlayerX = 7; // Coordenada X inicial do jogador
+    int PlayerY = 1; // Coordenada Y inicial do jogador
+    int ChaveY = 5;
+    int ChaveX = 7;
+     
     
     char mapa[13][13];
-    
-    GenerateMap1(mapa, PlayerY, PlayerX);
+    GenerateMap1(mapa, PlayerX, PlayerY, ChaveY, ChaveX);
     
     //charcreation();
     
     char command;
     
-        PrintMap(mapa);
+    PrintMap(mapa);
     while(1) {
         command = getch();
     
         switch(command){
             case 'W':
             case 'w':   
-                    if (mapa[PlayerY - 1][PlayerX] != '#' && mapa[PlayerY - 1][PlayerX] != 'D') // Verifica se a próxima posição não é uma parede
+                    if (mapa[PlayerY - 1][PlayerX] != '*' && mapa[PlayerY - 1][PlayerX] != 'D') // Verifica se a próxima posição não é uma parede
                     PlayerY--;
                 break;
             case 'S':
             case 's':
-                if (mapa[PlayerY + 1][PlayerX] != '#' && mapa[PlayerY + 1][PlayerX] != 'D') // Verifica se a próxima posição não é uma parede
+                if (mapa[PlayerY + 1][PlayerX] != '*' && mapa[PlayerY + 1][PlayerX] != 'D') // Verifica se a próxima posição não é uma parede
                     PlayerY++;
                 break;
             case 'D':
             case 'd':
-                if (mapa[PlayerY][PlayerX + 1] != '#' && mapa[PlayerY][PlayerX + 1] != 'D') // Verifica se a próxima posição não é uma parede
+                if (mapa[PlayerY][PlayerX + 1] != '*' && mapa[PlayerY][PlayerX + 1] != 'D') // Verifica se a próxima posição não é uma parede
                     PlayerX++; 
                 break;
             case 'A':
             case 'a':
-                if (mapa[PlayerY][PlayerX - 1] != '#' && mapa[PlayerY][PlayerX - 1] != 'D') // Verifica se a próxima posição não é uma parede
+                if (mapa[PlayerY][PlayerX - 1] != '*' && mapa[PlayerY][PlayerX - 1] != 'D') // Verifica se a próxima posição não é uma parede
                     PlayerX--;
                 break;
             case 'I':
             case 'i':
-            	interact(mapa, PlayerX, PlayerY);
+            	Interact(mapa, PlayerX, PlayerY, ChaveY, ChaveX);
                 break;
         }
         system("cls");
-        GenerateMap1(mapa, PlayerX, PlayerY);
+        GenerateMap1(mapa, PlayerX, PlayerY,ChaveY,ChaveX);
         PrintMap(mapa);
+        if (PlayerX == '=' && PlayerY == '=') {
+            system("cls");
+            printf("Parabens! Voce abriu a porta e concluiu a fase!\n");
+            break;
+        }
     }
 }
 
 
 
 int main(){ // corrigir o bug do infinito
-    int option; 
+    int option;
+    int PlayerX = 5; // Coordenada X inicial do jogador
+    int PlayerY = 5; // Coordenada Y inicial do jogador 
+    int ChaveY = 5;
+    int ChaveX = 7;
+    
     bool tutorial = false; 
     printf("\n\n");
     printf("\t\t\t88^^Yb 888888 88^^Yb 88   88 888888 88^^Yb 888888  .o. .dP'Y8   8888b. 88   88 88b 88  dP^^b8  888888  dP^Yb  88b 88\n");
@@ -240,8 +295,7 @@ int main(){ // corrigir o bug do infinito
 
         switch(option){
             case 1:
-                GameStart();// Iniciar o Jogo
-                charcreation();
+                GameStart(PlayerX, PlayerY,ChaveY,ChaveX);// Iniciar o Jogo
                 break;
             case 2:
                 system("cls");
@@ -263,6 +317,7 @@ int main(){ // corrigir o bug do infinito
                 printf("Opção invalida.");
         }
     }while(option != 3);
+    
     getch();
     return 0;
 }
