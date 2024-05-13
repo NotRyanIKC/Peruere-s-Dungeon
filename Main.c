@@ -3,18 +3,16 @@
 #include <stdbool.h> // manipular bool
 #include <string.h> //manipular string
 #include <conio.h> //
-
+char mapa[13][13];
 typedef struct {
 
     bool vivo;
    
     char nome[16];// permite um nome de ate 16 caracteres
     int hp;
-
+ 
     int PlayerX;
     int PlayerY;
-    int ChaveY;
-    int ChaveX;
 
 }player;
     int continuar = 1;
@@ -41,7 +39,7 @@ typedef struct {
 		"\t\t\t**D## *****	     **",
 		"\t\t\t********************",
 		};*/
-void GenerateMap1(char mapa[13][13],int PlayerX, int PlayerY,int ChaveY,int ChaveX) {
+void GenerateMap1(char mapa[13][13],int PlayerX, int PlayerY) {
     // Layout do mapa em forma de array de strings
     int i,j;
     /*char layout2[23][23] = {
@@ -52,17 +50,17 @@ void GenerateMap1(char mapa[13][13],int PlayerX, int PlayerY,int ChaveY,int Chav
 		"\t\t\t*		 	**   **",
 		"\t\t\t*		 	 *#  **",
 		"\t\t\t*			      *",
-		"\t\t\t*			      *",
-		"\t\t\t*			      *",
-		"\t\t\t**			     **",
-		"\t\t\t***			X   ***",
-		"\t\t\t***			    ***",
-		"\t\t\t***			    ***",
 		"\t\t\t**			     **",
 		"\t\t\t*			      *",
-		"\t\t\t*	   *	 X    *",
+		"\t\t\t**			     **",
+		"\t\t\t***			    ***",
+		"\t\t\t***			    ***",
+		"\t\t\t***			    ***",
+		"\t\t\t**			     **",
+		"\t\t\t*			      *",
+		"\t\t\t**	   *	 X    *",
 		"\t\t\t** ##  ***	      *",
-		"\t\t\t**D## *****	     **",
+		"\t\t\t**D## *****	 @   **",
 		"\t\t\t********************",
 		};*/
     char layout[13][13] = {
@@ -71,26 +69,19 @@ void GenerateMap1(char mapa[13][13],int PlayerX, int PlayerY,int ChaveY,int Chav
         "\t\t\t*       *",
         "\t\t\t*       *",
         "\t\t\t*  ******",
-        "\t\t\t*  *    *",
+        "\t\t\t*  *@   *",
         "\t\t\t*  ***  *",
         "\t\t\t*  *D*  *",
         "\t\t\t*       *",
         "\t\t\t*********",
     };
     
-     
-    // Copiando o layout para o mapa do jogo
-    for (i = 0; i < 13; i++){
+     for (i = 0; i < 13; i++){
         for (j = 0; j < 13; j++){
-            if (layout[i][j] == '@' && mapa[i][j]) {
-                mapa[i][j] = '@';
-            }else{
-                mapa[i][j] = layout[i][j];
-            }
+            mapa[i][j] = layout[i][j];
         }
     }
     mapa[PlayerY][PlayerX] = '&';
-    mapa[ChaveY][ChaveX] = '@';
 };
 
 void PrintMap(char mapa[13][13]){
@@ -102,15 +93,7 @@ void PrintMap(char mapa[13][13]){
         printf("\n");
     }
 };
-void PrintMap2(char mapa[13][13]){
-    int i,j;
-    for (i = 0; i < 23; i++){
-        for (j = 0; j < 23; j++){
-            printf("%c", mapa[i][j]);
-        }
-        printf("\n");
-    }
-};
+
 
 void PrintTuto(){
     printf("Tutorial");
@@ -201,31 +184,23 @@ for (int i = PlayerY - 1; i <= PlayerY + 1; i++) {
     }
 }
 */
-void Interact(char mapa[13][13], int PlayerX, int PlayerY, int ChaveY,int ChaveX){
-    int i,j;
-    if (PlayerX == ChaveX && PlayerY == ChaveY) {
-        mapa[ChaveY][ChaveX] = ' ';
+void Interact(char mapa[13][13], int PlayerX, int PlayerY){
+    if (mapa[PlayerY][PlayerX] == '@') {
+        mapa[PlayerY][PlayerX] = ' '; // Remove o '@' do mapa
         printf("Voce pegou a chave '@'!\n");
-        for (i = 0; i < 13; i++) {
-            for (j = 0; j < 13; j++) {
-                if (mapa[i][j] == 'D') {
-                    mapa[i][j] = '=';
-                }
-            }
-        }
     }
 }
+
 
 // coordenada do objeto = x 5 e y 7
 void GameStart(){
     int PlayerX = 7; // Coordenada X inicial do jogador
     int PlayerY = 1; // Coordenada Y inicial do jogador
-    int ChaveY = 5;
-    int ChaveX = 7;
      
     
-    char mapa[13][13];
-    GenerateMap1(mapa, PlayerX, PlayerY, ChaveY, ChaveX);
+
+
+    GenerateMap1(mapa, PlayerX, PlayerY);
     
     //charcreation();
     
@@ -258,11 +233,11 @@ void GameStart(){
                 break;
             case 'I':
             case 'i':
-            	Interact(mapa, PlayerX, PlayerY, ChaveY, ChaveX);
+            	Interact(mapa, PlayerX, PlayerY);
                 break;
         }
         system("cls");
-        GenerateMap1(mapa, PlayerX, PlayerY,ChaveY,ChaveX);
+        GenerateMap1(mapa, PlayerX, PlayerY);
         PrintMap(mapa);
         if (PlayerX == '=' && PlayerY == '=') {
             system("cls");
@@ -276,10 +251,8 @@ void GameStart(){
 
 int main(){ // corrigir o bug do infinito
     int option;
-    int PlayerX = 5; // Coordenada X inicial do jogador
-    int PlayerY = 5; // Coordenada Y inicial do jogador 
-    int ChaveY = 5;
-    int ChaveX = 7;
+    int PlayerX = 7; // Coordenada X inicial do jogador
+    int PlayerY = 1; // Coordenada Y inicial do jogador 
     
     bool tutorial = false; 
     printf("\n\n");
@@ -295,7 +268,7 @@ int main(){ // corrigir o bug do infinito
 
         switch(option){
             case 1:
-                GameStart(PlayerX, PlayerY,ChaveY,ChaveX);// Iniciar o Jogo
+                GameStart(PlayerX, PlayerY);// Iniciar o Jogo
                 break;
             case 2:
                 system("cls");
