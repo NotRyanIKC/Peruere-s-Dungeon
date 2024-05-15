@@ -4,8 +4,8 @@
 #include <string.h>
 #include <conio.h>
 
-int level = 2;
 char mapa[23][23];
+
 
 typedef struct {
     bool vivo;
@@ -22,9 +22,10 @@ typedef struct {
 
 int continuar = 1;
 player newPlayer;
-
+int level = 1;
 void GenerateMap1(char mapa[23][23], int PlayerX, int PlayerY, int ChaveX, int ChaveY, int PortaX, int PortaY, int monsteX, int monsteY) {
     int i, j;
+    
 
     if (level == 1) {
         char layout[13][13] = {
@@ -74,7 +75,6 @@ void GenerateMap1(char mapa[23][23], int PlayerX, int PlayerY, int ChaveX, int C
             }
         }
     }
-
     mapa[PlayerY][PlayerX] = '&';
     mapa[monsteY][monsteX] = 'X';
     if (newPlayer.chavePega) {
@@ -127,15 +127,15 @@ void Interact() {
         newPlayer.chavePega = true;
         printf("Voce pegou a chave '@'!\n");
         mapa[newPlayer.PortaY][newPlayer.PortaX] = '=';
-    } else if (newPlayer.PlayerX == newPlayer.PortaX && newPlayer.PlayerY == newPlayer.PortaY && newPlayer.chavePega) {
+    }
+    else if (newPlayer.PlayerX == newPlayer.PortaX && newPlayer.PlayerY == newPlayer.PortaY && newPlayer.chavePega) {
         printf("Voce abriu a porta e concluiu a fase!\n");
         exit(0);
-    } else {
+    }
+    else {
         printf("Nada para interagir aqui.\n");
     }
 }
-
-#include <stdlib.h> // Para rand()
 
 void monstmov(int *monsteX, int *monsteY) {
     int n = 4;
@@ -153,8 +153,9 @@ void monstmov(int *monsteX, int *monsteY) {
     }
 }
 
+
 void GameStart() {
-    int monsteX, monsteY;
+int monsteX = -1, monsteY = -1;
 
     if (level == 1) {
         newPlayer.PlayerX = 7;
@@ -165,9 +166,7 @@ void GameStart() {
 
         newPlayer.PortaX = 7;
         newPlayer.PortaY = 7;
-
-        monsteX = 0;
-        monsteY = 0;
+        
 
     } else if (level == 2) {
         newPlayer.PlayerX = 6;
@@ -196,25 +195,25 @@ void GameStart() {
         case 'w':
             if (mapa[newPlayer.PlayerY - 1][newPlayer.PlayerX] != '*' && mapa[newPlayer.PlayerY - 1][newPlayer.PlayerX] != 'D')
                 newPlayer.PlayerY--;
-            monstmov(&monsteX, &monsteY);
+            if (level == 2) monstmov(&monsteX, &monsteY);
             break;
         case 'S':
         case 's':
             if (mapa[newPlayer.PlayerY + 1][newPlayer.PlayerX] != '*' && mapa[newPlayer.PlayerY + 1][newPlayer.PlayerX] != 'D')
                 newPlayer.PlayerY++;
-            monstmov(&monsteX, &monsteY);
+            if (level == 2) monstmov(&monsteX, &monsteY);
             break;
         case 'D':
         case 'd':
             if (mapa[newPlayer.PlayerY][newPlayer.PlayerX + 1] != '*' && mapa[newPlayer.PlayerY][newPlayer.PlayerX + 1] != 'D')
                 newPlayer.PlayerX++;
-            monstmov(&monsteX, &monsteY);
+            if (level == 2) monstmov(&monsteX, &monsteY);
             break;
         case 'A':
         case 'a':
             if (mapa[newPlayer.PlayerY][newPlayer.PlayerX - 1] != '*' && mapa[newPlayer.PlayerY][newPlayer.PlayerX - 1] != 'D')
                 newPlayer.PlayerX--;
-            monstmov(&monsteX, &monsteY);
+            if (level == 2) monstmov(&monsteX, &monsteY);
             break;
         case 'I':
         case 'i':
@@ -227,6 +226,14 @@ void GameStart() {
         if (mapa[newPlayer.PortaY][newPlayer.PortaX] == '=' && newPlayer.PlayerX == newPlayer.PortaX && newPlayer.PlayerY == newPlayer.PortaY) {
             system("cls");
             printf("Parabens! Voce abriu a porta e concluiu a fase!\n");
+            system("pause");
+            system("cls");
+            printf("\n\n");
+    		printf("\t\t\t88^^Yb 888888 88^^Yb 88   88 888888 88^^Yb 888888  .o. .dP'Y8   8888b. 88   88 88b 88  dP^^b8  888888  dP^Yb  88b 88\n");
+   		    printf("\t\t\t88__dP 88__   88__dP 88   88 88__   88__dP 88__   ,dP' `Ybo.'   8I  Yb 88   88 88Yb88  dP   `' 88__   dP   Yb 88Yb88\n");
+    		printf("\t\t\t88^^^  88^^   88^^Yb Y8   8P 88^^   88^^Yb 88^^        o.`Y8b   8I  dY Y8   8P 88 Y88  Yb  ^88 88^^   Yb   dP 88 Y88\n");
+    		printf("\t\t\t88     888888 88  Yb ^YbodP^ 888888 88  Yb 888888      8bodP^   8888Y' `YbodP' 88  Y8  YboodP  888888  YbodP  88  Y8\n");
+    		printf("\n\n");
             break;
         }
     }
