@@ -5,7 +5,7 @@
 #include <conio.h>
 
 char mapa[23][23];
-
+char mapa2[13][13];
 
 typedef struct {
     bool vivo;
@@ -17,13 +17,15 @@ typedef struct {
     int ChaveY;
     int PortaX;
     int PortaY;
+    int BotaoX;
+    int BotaoY;
     bool chavePega;
 } player;
 
 int continuar = 1;
 player newPlayer;
-int level = 1;
-void GenerateMap1(char mapa[23][23], int PlayerX, int PlayerY, int ChaveX, int ChaveY, int PortaX, int PortaY, int monsteX, int monsteY) {
+int level = 2;
+void GenerateMap1(char mapa[23][23], int PlayerX, int PlayerY, int ChaveX, int ChaveY, int PortaX, int PortaY, int monsteX, int monsteY, int BotaoX, int BotaoY) {
     int i, j;
     
 
@@ -40,10 +42,12 @@ void GenerateMap1(char mapa[23][23], int PlayerX, int PlayerY, int ChaveX, int C
             "\t\t\t*       *",
             "\t\t\t*********",
         };
-
+		newPlayer.PortaX = 7;
+		newPlayer.PortaY = 7;
         for (i = 0; i < 13; i++) {
             for (j = 0; j < 13; j++) {
                 mapa[i][j] = layout[i][j];
+                
             }
         }
     } else if (level == 2) {
@@ -68,7 +72,10 @@ void GenerateMap1(char mapa[23][23], int PlayerX, int PlayerY, int ChaveX, int C
             "\t\t\t**D## *****   @   **",
             "\t\t\t********************",
         };
-
+        newPlayer.PortaX = 5; // Ajuste das coordenadas da porta para ficarem dentro dos limites do mapa
+    	newPlayer.PortaY = 17;
+		
+        
         for (i = 0; i < 23; i++) {
             for (j = 0; j < 23; j++) {
                 mapa[i][j] = layout2[i][j];
@@ -77,7 +84,10 @@ void GenerateMap1(char mapa[23][23], int PlayerX, int PlayerY, int ChaveX, int C
     }
     mapa[PlayerY][PlayerX] = '&';
     mapa[monsteY][monsteX] = 'X';
-    if (newPlayer.chavePega) {
+    if(level==2){
+    	mapa[BotaoX][BotaoY] = 'O';
+	}
+    else if (newPlayer.chavePega) {
         mapa[ChaveY][ChaveX] = ' ';
         mapa[PortaY][PortaX] = '=';
     } else {
@@ -95,7 +105,15 @@ void PrintMap(char mapa[23][23]) {
         printf("\n");
     }
 }
-
+void PrintMap2(char mapa2[13][13]) {
+    int i, j;
+    for (i = 0; i < 13; i++) {
+        for (j = 0; j < 13; j++) {
+            printf("%c", mapa[i][j]);
+        }
+        printf("\n");
+    }
+}
 void PrintTuto() {
     printf("Tutorial\n");
     printf("'W' = Mover para cima\n'A' = Mover para a esquerda\n'S' = Mover para baixo\n'D' = Mover para a direita\n'I' = Interagir com objetos (Somente quando estiver embaixo do jogador)\n\n");
@@ -114,6 +132,7 @@ void PlayerSettingsBase() {
     newPlayer.vivo = true;
     newPlayer.hp = 3;
     newPlayer.chavePega = false;
+    const int limiteEspinhos = 3;
 }
 
 void sair() {
@@ -131,7 +150,9 @@ void Interact() {
     else if (newPlayer.PlayerX == newPlayer.PortaX && newPlayer.PlayerY == newPlayer.PortaY && newPlayer.chavePega) {
         printf("Voce abriu a porta e concluiu a fase!\n");
         exit(0);
-    }
+    }else if(mapa[newPlayer.PlayerY][newPlayer.PlayerX] == 'O'){
+    	printf("BAZINGA");
+	}
     else {
         printf("Nada para interagir aqui.\n");
     }
@@ -156,11 +177,12 @@ void monstmov(int *monsteX, int *monsteY) {
 
 void GameStart() {
 int monsteX = -1, monsteY = -1;
-
+const int limiteEspinhos = 3;
+newPlayer.hp = 3;
     if (level == 1) {
         newPlayer.PlayerX = 7;
         newPlayer.PlayerY = 1;
-
+        
         newPlayer.ChaveX = 7;
         newPlayer.ChaveY = 5;
 
@@ -177,12 +199,15 @@ int monsteX = -1, monsteY = -1;
 
         newPlayer.PortaX = 5;
         newPlayer.PortaY = 17;
+        
+		newPlayer.BotaoX = 1;
+        newPlayer.BotaoY = 19;
 
         monsteX = 18;
         monsteY = 14;
     }
 
-    GenerateMap1(mapa, newPlayer.PlayerX, newPlayer.PlayerY, newPlayer.ChaveX, newPlayer.ChaveY, newPlayer.PortaX, newPlayer.PortaY, monsteX, monsteY);
+    GenerateMap1(mapa, newPlayer.PlayerX, newPlayer.PlayerY, newPlayer.ChaveX, newPlayer.ChaveY, newPlayer.PortaX, newPlayer.PortaY, monsteX, monsteY,newPlayer.BotaoX,newPlayer.BotaoY);
 
     char command;
 
@@ -195,37 +220,59 @@ int monsteX = -1, monsteY = -1;
         case 'w':
             if (mapa[newPlayer.PlayerY - 1][newPlayer.PlayerX] != '*' && mapa[newPlayer.PlayerY - 1][newPlayer.PlayerX] != 'D')
                 newPlayer.PlayerY--;
-            if (level == 2) monstmov(&monsteX, &monsteY);
+         
             break;
         case 'S':
         case 's':
             if (mapa[newPlayer.PlayerY + 1][newPlayer.PlayerX] != '*' && mapa[newPlayer.PlayerY + 1][newPlayer.PlayerX] != 'D')
                 newPlayer.PlayerY++;
-            if (level == 2) monstmov(&monsteX, &monsteY);
+         
             break;
         case 'D':
         case 'd':
             if (mapa[newPlayer.PlayerY][newPlayer.PlayerX + 1] != '*' && mapa[newPlayer.PlayerY][newPlayer.PlayerX + 1] != 'D')
                 newPlayer.PlayerX++;
-            if (level == 2) monstmov(&monsteX, &monsteY);
+        
             break;
         case 'A':
         case 'a':
             if (mapa[newPlayer.PlayerY][newPlayer.PlayerX - 1] != '*' && mapa[newPlayer.PlayerY][newPlayer.PlayerX - 1] != 'D')
                 newPlayer.PlayerX--;
-            if (level == 2) monstmov(&monsteX, &monsteY);
+          
             break;
         case 'I':
         case 'i':
             Interact();
             break;
         }
+        if (level == 2) {
+        int tempX = monsteX, tempY = monsteY;
+        monstmov(&tempX, &tempY); // Movimento temporário do monstro
+
+        // Verifica se o movimento do monstro colide com parede ou espinhos
+        if (mapa[tempY][tempX] != '*' && mapa[tempY][tempX] != '#') {
+            monsteX = tempX;
+            monsteY = tempY;
+        }
+    }
+        if (mapa[newPlayer.PlayerY][newPlayer.PlayerX] == '#') {
+            newPlayer.hp--;
+            printf("Voce encostou nos espinhos! Perdeu vida %d vezes.\n", newPlayer.hp);
+            // Verificar se o jogador excedeu o limite de toques nos espinhos
+            if (newPlayer.hp == 0) {
+                // Se sim, o jogador morre
+                printf("Voce encostou nos espinhos %d vezes e morreu!\n", limiteEspinhos);
+                printf("Fim de jogo!\n");
+                exit(0); // Ou faça qualquer ação de reiniciar o jogo ou a fase
+            }
+        }
         system("cls");
-        GenerateMap1(mapa, newPlayer.PlayerX, newPlayer.PlayerY, newPlayer.ChaveX, newPlayer.ChaveY, newPlayer.PortaX, newPlayer.PortaY, monsteX, monsteY);
+        GenerateMap1(mapa, newPlayer.PlayerX, newPlayer.PlayerY, newPlayer.ChaveX, newPlayer.ChaveY, newPlayer.PortaX, newPlayer.PortaY, monsteX, monsteY,newPlayer.BotaoX,newPlayer.BotaoY);
         PrintMap(mapa);
         if (mapa[newPlayer.PortaY][newPlayer.PortaX] == '=' && newPlayer.PlayerX == newPlayer.PortaX && newPlayer.PlayerY == newPlayer.PortaY) {
             system("cls");
             printf("Parabens! Voce abriu a porta e concluiu a fase!\n");
+            level = 2;
             system("pause");
             system("cls");
             printf("\n\n");
