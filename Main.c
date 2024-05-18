@@ -3,9 +3,12 @@
 #include <stdbool.h>
 #include <string.h>
 #include <conio.h>
-
-char mapa[23][23];
-char mapa2[13][13];
+//globais do mapa
+char mapa[43][43];
+//global para chave
+chavePega = false;
+//global do nivel
+int level = 1;
 
 typedef struct {
     bool vivo;
@@ -19,13 +22,11 @@ typedef struct {
     int PortaY;
     int BotaoX;
     int BotaoY;
-    bool chavePega;
 } player;
 
 int continuar = 1;
 player newPlayer;
-int level = 2;
-void GenerateMap1(char mapa[23][23], int PlayerX, int PlayerY, int ChaveX, int ChaveY, int PortaX, int PortaY, int monsteX, int monsteY, int BotaoX, int BotaoY) {
+void GenerateMap1(char mapa[43][43], int PlayerX, int PlayerY, int ChaveX, int ChaveY, int PortaX, int PortaY, int monsteX, int monsteY, int BotaoX, int BotaoY) {
     int i, j;
     
 
@@ -81,13 +82,65 @@ void GenerateMap1(char mapa[23][23], int PlayerX, int PlayerY, int ChaveX, int C
                 mapa[i][j] = layout2[i][j];
             }
         }
-    }
+    }/* else if(level == 3){
+            char layout3 [43][43] = {
+                "\t\t\t*****************************************",
+                "\t\t\t**       &         *         #@#       **",
+                "\t\t\t*                  *         # #        *",
+                "\t\t\t*                  *    #               *",
+                "\t\t\t*      #           *                 #  *",
+                "\t\t\t*                  *                    *",
+                "\t\t\t*            #     *    #               *",
+                "\t\t\t*                  *                    *",
+                "\t\t\t*                  *                 #  *",
+                "\t\t\t*    #   X         *                    *",
+                "\t\t\t*                  *    #               *",
+                "\t\t\t*                  *                    *",
+                "\t\t\t*                  *             #      *",
+                "\t\t\t*                  *                    *",
+                "\t\t\t*             #    *    #               *",
+                "\t\t\t* <                *                  > *",
+                "\t\t\t*                  *                    *",
+                "\t\t\t*                  *                    *",
+                "\t\t\t*                  *                #   *",
+                "\t\t\t*      #           *                    *",
+                "\t\t\t*                  *                    *",
+                "\t\t\t*                  *      #             *",
+                "\t\t\t*                  *                    *",
+                "\t\t\t*             #    *          #         *",
+                "\t\t\t*   #              *                    *",
+                "\t\t\t*                  *                 #  *",
+                "\t\t\t*                  *                    *",
+                "\t\t\t*                  *                    *",
+                "\t\t\t*             #    *      #             *",
+                "\t\t\t*     #            *                    *",
+                "\t\t\t*                  *                    *",
+                "\t\t\t*                  *                    *",
+                "\t\t\t*             #    *                    *",
+                "\t\t\t*                  *                    *",
+                "\t\t\t*                  *         V          *",
+                "\t\t\t*    #             *                    *",
+                "\t\t\t*                  *                    *",
+                "\t\t\t*                  *                    *",
+                "\t\t\t**     # D #       *        #          **",
+                "\t\t\t*****************************************",
+        };
+        for(i = 0; i < 43; i++) {
+            for(i = 0; i < 43; i++){
+                mapa[i][j] = layout3[i][j];
+            }
+*/
+
+    
+
+    
     mapa[PlayerY][PlayerX] = '&';
     mapa[monsteY][monsteX] = 'X';
+    
     if(level==2){
     	mapa[BotaoX][BotaoY] = 'O';
 	}
-    else if (newPlayer.chavePega) {
+    if (chavePega) {
         mapa[ChaveY][ChaveX] = ' ';
         mapa[PortaY][PortaX] = '=';
     } else {
@@ -95,25 +148,16 @@ void GenerateMap1(char mapa[23][23], int PlayerX, int PlayerY, int ChaveX, int C
         mapa[PortaY][PortaX] = 'D';
     }
 }
+void PrintMap(char mapa[43][43]) {
+    int i, j;
+    for (i = 0; i < 43; i++) {
+        for (j = 0; j < 43; j++) {
+            printf("%c", mapa[i][j]);
+        }
+        printf("\n");
+    }
+}
 
-void PrintMap(char mapa[23][23]) {
-    int i, j;
-    for (i = 0; i < 23; i++) {
-        for (j = 0; j < 23; j++) {
-            printf("%c", mapa[i][j]);
-        }
-        printf("\n");
-    }
-}
-void PrintMap2(char mapa2[13][13]) {
-    int i, j;
-    for (i = 0; i < 13; i++) {
-        for (j = 0; j < 13; j++) {
-            printf("%c", mapa[i][j]);
-        }
-        printf("\n");
-    }
-}
 void PrintTuto() {
     printf("Tutorial\n");
     printf("'W' = Mover para cima\n'A' = Mover para a esquerda\n'S' = Mover para baixo\n'D' = Mover para a direita\n'I' = Interagir com objetos (Somente quando estiver embaixo do jogador)\n\n");
@@ -131,7 +175,6 @@ void PrintTuto() {
 void PlayerSettingsBase() {
     newPlayer.vivo = true;
     newPlayer.hp = 3;
-    newPlayer.chavePega = false;
     const int limiteEspinhos = 3;
 }
 
@@ -141,19 +184,17 @@ void sair() {
 }
 
 void Interact() {
-    if (newPlayer.PlayerX == newPlayer.ChaveX && newPlayer.PlayerY == newPlayer.ChaveY && !newPlayer.chavePega) {
+    if (newPlayer.PlayerX == newPlayer.ChaveX && newPlayer.PlayerY == newPlayer.ChaveY && !chavePega) {
         mapa[newPlayer.ChaveY][newPlayer.ChaveX] = ' ';
-        newPlayer.chavePega = true;
+        chavePega = true;
         printf("Voce pegou a chave '@'!\n");
         mapa[newPlayer.PortaY][newPlayer.PortaX] = '=';
-    }
-    else if (newPlayer.PlayerX == newPlayer.PortaX && newPlayer.PlayerY == newPlayer.PortaY && newPlayer.chavePega) {
+    }else if (newPlayer.PlayerX == newPlayer.PortaX && newPlayer.PlayerY == newPlayer.PortaY && chavePega) {
         printf("Voce abriu a porta e concluiu a fase!\n");
         exit(0);
     }else if(mapa[newPlayer.PlayerY][newPlayer.PlayerX] == 'O'){
-    	printf("BAZINGA");
-	}
-    else {
+    	printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+	}else{
         printf("Nada para interagir aqui.\n");
     }
 }
@@ -174,10 +215,10 @@ void monstmov(int *monsteX, int *monsteY) {
     }
 }
 
-
 void GameStart() {
 int monsteX = -1, monsteY = -1;
 const int limiteEspinhos = 3;
+
 newPlayer.hp = 3;
     if (level == 1) {
         newPlayer.PlayerX = 7;
@@ -196,6 +237,21 @@ newPlayer.hp = 3;
 
         newPlayer.ChaveX = 17;
         newPlayer.ChaveY = 17;
+
+        newPlayer.PortaX = 5;
+        newPlayer.PortaY = 17;
+        
+		newPlayer.BotaoX = 1;
+        newPlayer.BotaoY = 19;
+
+        monsteX = 18;
+        monsteY = 14;
+    } else if (level == 3) {
+        newPlayer.PlayerX = 10;
+        newPlayer.PlayerY = 1;
+
+        newPlayer.ChaveX = 17;
+        newPlayer.ChaveY = 16;
 
         newPlayer.PortaX = 5;
         newPlayer.PortaY = 17;
@@ -263,8 +319,7 @@ newPlayer.hp = 3;
                 // Se sim, o jogador morre
                 printf("Voce encostou nos espinhos %d vezes e morreu!\n", limiteEspinhos);
                 printf("Fim de jogo!\n");
-                exit(0); // Ou faça qualquer ação de reiniciar o jogo ou a fase
-            }
+                exit(0);
         }
         system("cls");
         GenerateMap1(mapa, newPlayer.PlayerX, newPlayer.PlayerY, newPlayer.ChaveX, newPlayer.ChaveY, newPlayer.PortaX, newPlayer.PortaY, monsteX, monsteY,newPlayer.BotaoX,newPlayer.BotaoY);
@@ -272,16 +327,12 @@ newPlayer.hp = 3;
         if (mapa[newPlayer.PortaY][newPlayer.PortaX] == '=' && newPlayer.PlayerX == newPlayer.PortaX && newPlayer.PlayerY == newPlayer.PortaY) {
             system("cls");
             printf("Parabens! Voce abriu a porta e concluiu a fase!\n");
-            level = 2;
+            chavePega = false;
+            level++;
             system("pause");
             system("cls");
-            printf("\n\n");
-    		printf("\t\t\t88^^Yb 888888 88^^Yb 88   88 888888 88^^Yb 888888  .o. .dP'Y8   8888b. 88   88 88b 88  dP^^b8  888888  dP^Yb  88b 88\n");
-   		    printf("\t\t\t88__dP 88__   88__dP 88   88 88__   88__dP 88__   ,dP' `Ybo.'   8I  Yb 88   88 88Yb88  dP   `' 88__   dP   Yb 88Yb88\n");
-    		printf("\t\t\t88^^^  88^^   88^^Yb Y8   8P 88^^   88^^Yb 88^^        o.`Y8b   8I  dY Y8   8P 88 Y88  Yb  ^88 88^^   Yb   dP 88 Y88\n");
-    		printf("\t\t\t88     888888 88  Yb ^YbodP^ 888888 88  Yb 888888      8bodP^   8888Y' `YbodP' 88  Y8  YboodP  888888  YbodP  88  Y8\n");
-    		printf("\n\n");
-            break;
+            GenerateMap1(mapa, newPlayer.PlayerX, newPlayer.PlayerY, newPlayer.ChaveX, newPlayer.ChaveY, newPlayer.PortaX, newPlayer.PortaY, monsteX, monsteY,newPlayer.BotaoX,newPlayer.BotaoY);
+            PrintMap(mapa);
         }
     }
 }
@@ -299,7 +350,6 @@ int main() {
         printf("\t1 - Jogar\n\t2 - Tutorial\n\t3 - Sair\n");
         scanf("%d", &option);
         system("cls");
-
         switch (option) {
         case 1:
             PlayerSettingsBase();
