@@ -6,7 +6,7 @@
 //globais do mapa
 char mapa[43][43];
 //global para chave
-chavePega = false;
+bool chavePega = false;
 //global do nivel
 int level = 1;
 
@@ -175,7 +175,6 @@ void PrintTuto() {
 void PlayerSettingsBase() {
     newPlayer.vivo = true;
     newPlayer.hp = 3;
-    const int limiteEspinhos = 3;
 }
 
 void sair() {
@@ -336,8 +335,8 @@ newPlayer.hp = 3;
         }
     }
 }
-
-int main() {
+}
+void main() {
     int option;
     bool tutorial = false;
     printf("\n\n");
