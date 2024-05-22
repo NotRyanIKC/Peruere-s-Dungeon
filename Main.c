@@ -24,6 +24,10 @@ typedef struct {
     int PortaY;
     int BotaoX;
     int BotaoY;
+    int Tp1X;
+    int Tp2X;
+    int Tp1Y;
+    int temp2Y;
 } player;
 
 int continuar = 1;
@@ -110,7 +114,7 @@ void GenerateMap2(char mapa2[23][23], int PlayerX, int PlayerY, int ChaveX, int 
     }
 }
 
-void GenerateMap3(char mapa3[43][43], int PlayerX, int PlayerY, int ChaveX, int ChaveY, int PortaX, int PortaY, int monsteX, int monsteY,int monste2X,int monste2Y, int BotaoX, int BotaoY) {
+void GenerateMap3(char mapa3[43][43], int PlayerX, int PlayerY, int ChaveX, int ChaveY, int PortaX, int PortaY, int monsteX, int monsteY,int monste2X,int monste2Y, int BotaoX, int BotaoY, int Tp1X,int Tp2X,int Tp1Y,int Tp2Y) {
     int i,j;
     
     char layout3[43][43] = {
@@ -123,13 +127,13 @@ void GenerateMap3(char mapa3[43][43], int PlayerX, int PlayerY, int ChaveX, int 
             "\t*            #     *    #               *",
             "\t*                  *                    *",
             "\t*                  *                 #  *",
-            "\t*    #   X         *                    *",
+            "\t*    #             *                    *",
             "\t*                  *    #               *",
             "\t*                  *                    *",
             "\t*                  *             #      *",
             "\t*                  *                    *",
             "\t*             #    *    #               *",
-            "\t* <                *                  > *",
+            "\t*                  *                    *",
             "\t*                  *                    *",
             "\t*                  *                    *",
             "\t*                  *                #   *",
@@ -166,6 +170,9 @@ void GenerateMap3(char mapa3[43][43], int PlayerX, int PlayerY, int ChaveX, int 
     mapa3[monsteY][monsteX] = 'X';
     mapa3[monste2Y][monste2X] = 'V';
     mapa3[BotaoX][BotaoY] = 'O';
+    mapa3[Tp1Y][Tp1X] = '<';
+    mapa3[Tp2Y][Tp2X] = '>';
+    
     if (chavePega == true) {
         mapa3[ChaveY][ChaveX] = ' ';
         mapa3[PortaY][PortaX] = '=';
@@ -329,13 +336,18 @@ void mapa3start(){
     newPlayer.BotaoX = 22;
     newPlayer.BotaoY = 39;
     
-    int monsteX = 20;
-    int monsteY = 14;
+    int monsteX = 10;
+    int monsteY = 9;
     
-    int monste2X = 20;
+    int monste2X = 22;
     int monste2Y = 10;
 
-    GenerateMap3(mapa3, newPlayer.PlayerX, newPlayer.PlayerY, newPlayer.ChaveX, newPlayer.ChaveY, newPlayer.PortaX, newPlayer.PortaY, monsteX, monsteY, monste2X, monste2Y, newPlayer.BotaoX, newPlayer.BotaoY);
+    int Tp1X = 3;
+    int Tp1Y = 18;
+    int Tp2X = 39;
+    int Tp2Y = 18;
+
+    GenerateMap3(mapa3, newPlayer.PlayerX, newPlayer.PlayerY, newPlayer.ChaveX, newPlayer.ChaveY, newPlayer.PortaX, newPlayer.PortaY, monsteX, monsteY, monste2X, monste2Y, newPlayer.BotaoX, newPlayer.BotaoY,Tp1X,Tp2X,Tp1Y,Tp2Y);
     
     char command;
     PrintMap3(mapa3);
@@ -362,7 +374,7 @@ void mapa3start(){
                         }
                     }
                     system("cls"); // Limpar a tela antes de atualizar e imprimir o mapa
-                    GenerateMap3(mapa3, newPlayer.PlayerX, newPlayer.PlayerY, newPlayer.ChaveX, newPlayer.ChaveY, newPlayer.PortaX, newPlayer.PortaY, monsteX, monsteY, monste2X, monste2Y, newPlayer.BotaoX, newPlayer.BotaoY);
+                    GenerateMap3(mapa3, newPlayer.PlayerX, newPlayer.PlayerY, newPlayer.ChaveX, newPlayer.ChaveY, newPlayer.PortaX, newPlayer.PortaY, monsteX, monsteY, monste2X, monste2Y, newPlayer.BotaoX, newPlayer.BotaoY,Tp1X,Tp2X,Tp1Y,Tp2Y);
                     PrintMap3(mapa3);
                 }
                 break;
@@ -384,7 +396,7 @@ void mapa3start(){
                         }
                     }
                     system("cls"); // Limpar a tela antes de atualizar e imprimir o mapa
-                    GenerateMap3(mapa3, newPlayer.PlayerX, newPlayer.PlayerY, newPlayer.ChaveX, newPlayer.ChaveY, newPlayer.PortaX, newPlayer.PortaY, monsteX, monsteY, monste2X, monste2Y, newPlayer.BotaoX, newPlayer.BotaoY);
+                   GenerateMap3(mapa3, newPlayer.PlayerX, newPlayer.PlayerY, newPlayer.ChaveX, newPlayer.ChaveY, newPlayer.PortaX, newPlayer.PortaY, monsteX, monsteY, monste2X, monste2Y, newPlayer.BotaoX, newPlayer.BotaoY,Tp1X,Tp2X,Tp1Y,Tp2Y);
                     PrintMap3(mapa3);
                 }
                 break;
@@ -406,8 +418,8 @@ void mapa3start(){
                         }
                     }
                     system("cls"); // Limpar a tela antes de atualizar e imprimir o mapa
-                    GenerateMap3(mapa3, newPlayer.PlayerX, newPlayer.PlayerY, newPlayer.ChaveX, newPlayer.ChaveY, newPlayer.PortaX, newPlayer.PortaY, monsteX, monsteY, monste2X, monste2Y, newPlayer.BotaoX, newPlayer.BotaoY);
-                    PrintMap3(mapa3);
+                
+                GenerateMap3(mapa3, newPlayer.PlayerX, newPlayer.PlayerY, newPlayer.ChaveX, newPlayer.ChaveY, newPlayer.PortaX, newPlayer.PortaY, monsteX, monsteY, monste2X, monste2Y, newPlayer.BotaoX, newPlayer.BotaoY,Tp1X,Tp2X,Tp1Y,Tp2Y);                    PrintMap3(mapa3);
                 }
                 break;
             case 'A':
@@ -428,7 +440,7 @@ void mapa3start(){
                         }
                     }
                     system("cls"); // Limpar a tela antes de atualizar e imprimir o mapa
-                    GenerateMap3(mapa3, newPlayer.PlayerX, newPlayer.PlayerY, newPlayer.ChaveX, newPlayer.ChaveY, newPlayer.PortaX, newPlayer.PortaY, monsteX, monsteY, monste2X, monste2Y, newPlayer.BotaoX, newPlayer.BotaoY);
+                    GenerateMap3(mapa3, newPlayer.PlayerX, newPlayer.PlayerY, newPlayer.ChaveX, newPlayer.ChaveY, newPlayer.PortaX, newPlayer.PortaY, monsteX, monsteY, monste2X, monste2Y, newPlayer.BotaoX, newPlayer.BotaoY,Tp1X,Tp2X,Tp1Y,Tp2Y);                    
                     PrintMap3(mapa3);
                 }
                 break;
@@ -437,6 +449,15 @@ void mapa3start(){
                 Interact3();
                 break;
         }
+        
+        if (mapa3[newPlayer.PlayerY][newPlayer.PlayerX] == '<') {
+            newPlayer.PlayerX = 39;
+            newPlayer.PlayerY = 18;
+        } else if (mapa3[newPlayer.PlayerY][newPlayer.PlayerX] == '>') {
+            newPlayer.PlayerX = 3;
+            newPlayer.PlayerY = 18;
+        }
+
         if(mapa3){
         int tempX = monsteX, tempY = monsteY;
         int temp2X = monste2X, temp2Y = monste2Y;
@@ -450,6 +471,7 @@ void mapa3start(){
             monste2Y = temp2Y;
         }
     }
+//        if (mapa3[newPlayer.][])
         if (mapa3[newPlayer.PortaY][newPlayer.PortaX] == '=' && newPlayer.PlayerX == newPlayer.PortaX && newPlayer.PlayerY == newPlayer.PortaY) {
             printf("Parabens! Voce abriu a porta e concluiu a fase!\n");
             system("cls");
