@@ -305,21 +305,6 @@ void monstmov(int *monsteX, int *monsteY) {
         (*monsteY)--;
     }
 }
-void monstmov2(int *monste2X, int *monste2Y) {
-    int n = 4;
-
-    int movement = rand() % (n + 1);
-
-    if (movement == 1) {
-        (*monste2X)++;
-    } else if (movement == 2) {
-        (*monste2X)--;
-    } else if (movement == 3) {
-        (*monste2Y)++;
-    } else {
-        (*monste2Y)--;
-    }
-}
 
 void mapa3start(){
     newPlayer.hp = 3;
@@ -449,7 +434,7 @@ void mapa3start(){
                 Interact3();
                 break;
         }
-        
+
         if (mapa3[newPlayer.PlayerY][newPlayer.PlayerX] == '<') {
             newPlayer.PlayerX = 39;
             newPlayer.PlayerY = 18;
@@ -459,16 +444,33 @@ void mapa3start(){
         }
 
         if(mapa3){
+    int movement = rand() %2;
+
+    if(movement == 0){
+        if(newPlayer.PlayerX<monste2X){
+            monste2X--;
+        }else{
+            monste2X++;
+        }
+    }else{
+        if(newPlayer.PlayerY<monste2Y){
+            monste2Y--;
+    }else{
+            monste2Y++;
+        }
+    } 
+}
+
+
+
+
+        if(mapa3){
         int tempX = monsteX, tempY = monsteY;
-        int temp2X = monste2X, temp2Y = monste2Y;
         monstmov(&tempX, &tempY); // Movimento temporário do monstro
-        monstmov2(&tempX, &tempY);   
         // Verifica se o movimento do monstro colide com parede ou espinhos
-        if (mapa3[tempY][tempX] != '*' && mapa3[tempY][tempX] != '#' && mapa3[temp2Y][temp2X] != '*' && mapa3[temp2Y][temp2X] != '#') {
+        if (mapa3[tempY][tempX] != '*' && mapa3[tempY][tempX] != '#') {
             monsteX = tempX;
             monsteY = tempY;
-            monste2X = temp2X;
-            monste2Y = temp2Y;
         }
     }
 //        if (mapa3[newPlayer.][])
