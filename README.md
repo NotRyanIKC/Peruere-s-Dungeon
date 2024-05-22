@@ -11,9 +11,10 @@ Tutorial
     'D' = Mover para a direita
     'I' = Interagir com objetos (Somente quando estiver embaixo do jogador)
     
-    Voce (Player) tem apenas 3 vidas, seu objetivo eh pegar a '@' (Chave) para abrir a porta identificada como 'D' e concluir a fase.
-    Tome cuidado! Conforme voce avanca no jogo a dificuldade ira aumentar.
+    Voce (Player) tem apenas 3 vidas, seu objetivo eh pegar a '@' (Chave) para abrir a porta identificada como 'D' e concluir a fase
+    Tome cuidado! Conforme voce avanca no jogo a dificuldade ira aumentar
+    
     Esteja atento com inimigos e obstaculos identificados como 'X' (inimigo nivel 1),'V' (inimigo nivel 2) e '#' (Espinhos).
-    Caso encoste em algum desses inimigos ou obstaculos a fase sera reiniciada.
+    Caso sua vida caia para 0 a fase sera reiniciada.
     
     Obs: Aperte o botao ('O') encontrado em alguma fase e descubra algo secreto :)
