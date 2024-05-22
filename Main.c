@@ -8,7 +8,7 @@ char command;
 
 char mapa[13][13];
 char mapa2[23][23];
-char mapa3[45][45];
+char mapa3[43][43];
 
 bool chavePega;
 
@@ -110,54 +110,54 @@ void GenerateMap2(char mapa2[23][23], int PlayerX, int PlayerY, int ChaveX, int 
     }
 }
 
-void GenerateMap3(char mapa3[50][50], int PlayerX, int PlayerY, int ChaveX, int ChaveY, int PortaX, int PortaY, int monsteX, int monsteY,int monste2X,int monste2Y, int BotaoX, int BotaoY) {
+void GenerateMap3(char mapa3[43][43], int PlayerX, int PlayerY, int ChaveX, int ChaveY, int PortaX, int PortaY, int monsteX, int monsteY,int monste2X,int monste2Y, int BotaoX, int BotaoY) {
     int i,j;
     
-    char layout3[50][50] = {
-            "\t\t\t*****************************************",
-            "\t\t\t**       &         *         #@#       **",
-            "\t\t\t*                  *         # #        *",
-            "\t\t\t*                  *    #               *",
-            "\t\t\t*      #           *                 #  *",
-            "\t\t\t*                  *                    *",
-            "\t\t\t*            #     *    #               *",
-            "\t\t\t*                  *                    *",
-            "\t\t\t*                  *                 #  *",
-            "\t\t\t*    #   X         *                    *",
-            "\t\t\t*                  *    #               *",
-            "\t\t\t*                  *                    *",
-            "\t\t\t*                  *             #      *",
-            "\t\t\t*                  *                    *",
-            "\t\t\t*             #    *    #               *",
-            "\t\t\t* <                *                  > *",
-            "\t\t\t*                  *                    *",
-            "\t\t\t*                  *                    *",
-            "\t\t\t*                  *                #   *",
-            "\t\t\t*      #           *                    *",
-            "\t\t\t*                  *                    *",
-            "\t\t\t*                  *      #             *",
-            "\t\t\t*                  *                  O *",
-            "\t\t\t*             #    *          #         *",
-            "\t\t\t*   #              *                    *",
-            "\t\t\t*                  *                 #  *",
-            "\t\t\t*                  *                    *",
-            "\t\t\t*                  *                    *",
-            "\t\t\t*             #    *      #             *",
-            "\t\t\t*     #            *                    *",
-            "\t\t\t*                  *                    *",
-            "\t\t\t*                  *                    *",
-            "\t\t\t*             #    *                    *",
-            "\t\t\t*                  *                    *",
-            "\t\t\t*                  *         V          *",
-            "\t\t\t*    #             *                    *",
-            "\t\t\t*                  *                    *",
-            "\t\t\t*                  *                    *",
-            "\t\t\t**     # D #       *        #          **",
-            "\t\t\t*****************************************",
+    char layout3[43][43] = {
+            "\t*****************************************",
+            "\t**                 *         #@#       **",
+            "\t*                  *         # #        *",
+            "\t*                  *    #               *",
+            "\t*      #           *                 #  *",
+            "\t*                  *                    *",
+            "\t*            #     *    #               *",
+            "\t*                  *                    *",
+            "\t*                  *                 #  *",
+            "\t*    #   X         *                    *",
+            "\t*                  *    #               *",
+            "\t*                  *                    *",
+            "\t*                  *             #      *",
+            "\t*                  *                    *",
+            "\t*             #    *    #               *",
+            "\t* <                *                  > *",
+            "\t*                  *                    *",
+            "\t*                  *                    *",
+            "\t*                  *                #   *",
+            "\t*      #           *                    *",
+            "\t*                  *                    *",
+            "\t*                  *      #             *",
+            "\t*                  *                  O *",
+            "\t*             #    *          #         *",
+            "\t*   #              *                    *",
+            "\t*                  *                 #  *",
+            "\t*                  *                    *",
+            "\t*                  *                    *",
+            "\t*             #    *      #             *",
+            "\t*     #            *                    *",
+            "\t*                  *                    *",
+            "\t*                  *                    *",
+            "\t*             #    *                    *",
+            "\t*                  *                    *",
+            "\t*                  *         V          *",
+            "\t*    #             *                    *",
+            "\t*                  *                    *",
+            "\t*                  *                    *",
+            "\t**     # D #       *        #          **",
+            "\t*****************************************",
         };
 
-        for(i = 0; i < 50; i++) {
-            for(i = 0; i < 50; i++) {
+        for(i = 0; i < 43; i++) {
+            for(j = 0; j < 43; j++) {
                 mapa3[i][j] = layout3[i][j];
             }
         }
@@ -194,10 +194,10 @@ void PrintMap2(char mapa2[23][23]) {
         printf("\n");
     }
 }
-void PrintMap3(char mapa3[50][50]) {
+void PrintMap3(char mapa3[43][43]) {
     int i, j;
-    for (i = 0; i < 50; i++) {
-        for (j = 0; j < 50; j++) {
+    for (i = 0; i < 43; i++) {
+        for (j = 0; j < 43; j++) {
             printf("%c", mapa3[i][j]);
         }
         printf("\n");
@@ -318,16 +318,16 @@ void mapa3start(){
     newPlayer.hp = 3;
 
     newPlayer.PlayerX = 10;
-    newPlayer.PlayerY = 10;
+    newPlayer.PlayerY = 1;
         
-    newPlayer.ChaveX = 30;
-    newPlayer.ChaveY = 15;
+    newPlayer.ChaveX = 31;
+    newPlayer.ChaveY = 1;
 
-    newPlayer.PortaX = 20;
-    newPlayer.PortaY = 17;
+    newPlayer.PortaX = 10;
+    newPlayer.PortaY = 38;
 
-    newPlayer.BotaoX = 5;
-    newPlayer.BotaoY = 19;
+    newPlayer.BotaoX = 22;
+    newPlayer.BotaoY = 39;
     
     int monsteX = 20;
     int monsteY = 14;
