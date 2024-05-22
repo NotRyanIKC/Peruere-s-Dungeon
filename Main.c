@@ -82,9 +82,9 @@ void GenerateMap2(char mapa2[23][23], int PlayerX, int PlayerY, int ChaveX, int 
             "\t\t\t**                **",
             "\t\t\t*                  *",
             "\t\t\t**                **",
-            "\t\t\t***              ***",
-            "\t\t\t***              ***",
-            "\t\t\t***              ***",
+            "\t\t\t***#            #***",
+            "\t\t\t***###        ###***",
+            "\t\t\t***#            #***",
             "\t\t\t**                **",
             "\t\t\t*                  *",
             "\t\t\t**      *          *",
@@ -116,47 +116,46 @@ void GenerateMap2(char mapa2[23][23], int PlayerX, int PlayerY, int ChaveX, int 
 
 void GenerateMap3(char mapa3[43][43], int PlayerX, int PlayerY, int ChaveX, int ChaveY, int PortaX, int PortaY, int monsteX, int monsteY,int monste2X,int monste2Y, int BotaoX, int BotaoY, int Tp1X,int Tp2X,int Tp1Y,int Tp2Y) {
     int i,j;
-    
     char layout3[43][43] = {
             "\t*****************************************",
-            "\t**                 *         #@#       **",
+            "\t**                ***        #@#       **",
             "\t*                  *         # #        *",
-            "\t*                  *    #               *",
+            "\t*                  *    #      #        *",
             "\t*      #       #   *                 #  *",
-            "\t*                  *                    *",
+            "\t*                 ***                   *",
             "\t*  #          #    *    #               *",
             "\t*                  *                    *",
             "\t*        #         *                 #  *",
             "\t*    #             *                    *",
             "\t*            #     *    #               *",
             "\t*                  *                    *",
-            "\t*                  *             #      *",
+            "\t*                 ***             #     *",
             "\t*      #           *                    *",
             "\t*             #    *    #               *",
             "\t*                  *                    *",
             "\t*                  *                    *",
             "\t*                  *       #            *",
-            "\t*                  *                #   *",
+            "\t*   #             ***                   *",
             "\t*      #     #     *                    *",
             "\t*                  *                    *",
             "\t*                  *      #             *",
             "\t*                  *                  O *",
             "\t*             #    *          #         *",
-            "\t*   #              *                    *",
+            "\t*   #             ***                   *",
             "\t*                  *                 #  *",
             "\t*                  *                    *",
             "\t*                  *                    *",
-            "\t*             #    *      #             *",
+            "\t*             #   ***     #             *",
             "\t*     #            *                    *",
             "\t*                  *                    *",
-            "\t*                  *          #         *",
-            "\t*             #    *                    *",
-            "\t*                  *                    *",
-            "\t*                  *     #    V         *",
-            "\t*    #             *                    *",
+            "\t**                 *          #        **",
+            "\t***           #    *                  ***",
+            "\t****               *                 ****",
+            "\t***               ***     #            ***",
+            "\t**   #             *                   **",
             "\t*                  *              #     *",
-            "\t*       #   #      *                    *",
-            "\t**     # D #       *        #          **",
+            "\t*      #   #       *                    *",
+            "\t**     # D #      ***        #         **",
             "\t*****************************************",
         };
 
@@ -217,7 +216,7 @@ void PrintTuto() {
     printf("Voce (Player) tem apenas 3 vidas, seu objetivo eh pegar a '@' (Chave) para abrir a porta identificada como 'D' e concluir a fase.\n");
     printf("Tome cuidado! Conforme voce avanca no jogo a dificuldade ira aumentar.\n");
     printf("Esteja atento com inimigos e obstaculos identificados como 'X' (inimigo nivel 1),'V' (inimigo nivel 2) e '#' (Espinhos).\n");
-    printf("Caso encoste em algum desses inimigos ou obstaculos a fase sera reiniciada.\n\n");
+    printf("Caso sua vida chegue a 0 o jogo fechará.\n\n");
     printf("Obs: Aperte o botao ('O') encontrado em alguma fase e descubra algo secreto :)\n");
 
     printf("\nPressione qualquer tecla para voltar ao menu...\n");
@@ -247,7 +246,7 @@ void Interact() {
         printf("Voce abriu a porta e concluiu a fase!\n");
         exit(0);
     }else if(mapa[newPlayer.PlayerY][newPlayer.PlayerX] == 'O'){
-    	printf("BAZINGA");
+    	printf("COLOR YOUR NIGHT");
 	}
     else {
         printf("Nada para interagir aqui.\n");
@@ -476,7 +475,14 @@ void mapa3start(){
 //        if (mapa3[newPlayer.][])
         if (mapa3[newPlayer.PortaY][newPlayer.PortaX] == '=' && newPlayer.PlayerX == newPlayer.PortaX && newPlayer.PlayerY == newPlayer.PortaY) {
             printf("Parabens! Voce abriu a porta e concluiu a fase!\n\n");
-            printf("Depois de uma ardua jornada(ou nao), voce conseguiu escapar do calabouço! ");
+            system("cls");
+            printf("Depois de uma ardua jornada(ou nao), Voce conseguiu escapar do calabouço!\n ");
+            printf("  ___                __            \n");
+			printf(" / _ \___ ________ _/ / ___ ___  ___\n");
+			printf("/ ___/ _ `/ __/ _ `/ _ / -_/ _ \(_-<\n");
+			printf("/_/  \_,_/_/  \_,_/_.__\__/_//_/___/\n");
+			printf("\n");
+			printf("\n");
             exit(0);
         }
     }
@@ -623,6 +629,7 @@ void mapa2start(){
             system("cls");
             chavePega = false;
             system("pause");
+            system("cls");
             mapa3start();
         }
     }
@@ -712,6 +719,7 @@ void mapa1start() {
             system("cls");
             chavePega = false;
             system("pause");
+            system("cls");
             mapa2start();
             
         }
