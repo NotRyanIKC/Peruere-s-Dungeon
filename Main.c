@@ -122,22 +122,22 @@ void GenerateMap3(char mapa3[43][43], int PlayerX, int PlayerY, int ChaveX, int 
             "\t**                 *         #@#       **",
             "\t*                  *         # #        *",
             "\t*                  *    #               *",
-            "\t*      #           *                 #  *",
+            "\t*      #       #   *                 #  *",
             "\t*                  *                    *",
+            "\t*  #          #    *    #               *",
+            "\t*                  *                    *",
+            "\t*        #         *                 #  *",
+            "\t*    #             *                    *",
             "\t*            #     *    #               *",
             "\t*                  *                    *",
-            "\t*                  *                 #  *",
-            "\t*    #             *                    *",
-            "\t*                  *    #               *",
-            "\t*                  *                    *",
             "\t*                  *             #      *",
-            "\t*                  *                    *",
+            "\t*      #           *                    *",
             "\t*             #    *    #               *",
             "\t*                  *                    *",
             "\t*                  *                    *",
-            "\t*                  *                    *",
+            "\t*                  *       #            *",
             "\t*                  *                #   *",
-            "\t*      #           *                    *",
+            "\t*      #     #     *                    *",
             "\t*                  *                    *",
             "\t*                  *      #             *",
             "\t*                  *                  O *",
@@ -149,13 +149,13 @@ void GenerateMap3(char mapa3[43][43], int PlayerX, int PlayerY, int ChaveX, int 
             "\t*             #    *      #             *",
             "\t*     #            *                    *",
             "\t*                  *                    *",
-            "\t*                  *                    *",
+            "\t*                  *          #         *",
             "\t*             #    *                    *",
             "\t*                  *                    *",
-            "\t*                  *         V          *",
+            "\t*                  *     #    V         *",
             "\t*    #             *                    *",
-            "\t*                  *                    *",
-            "\t*                  *                    *",
+            "\t*                  *              #     *",
+            "\t*       #   #      *                    *",
             "\t**     # D #       *        #          **",
             "\t*****************************************",
         };
@@ -265,7 +265,7 @@ void Interact2() {
         printf("Voce abriu a porta e concluiu a fase!\n");
         exit(0);
     }else if(mapa2[newPlayer.PlayerY][newPlayer.PlayerX] == 'O'){
-    	printf("BAZINGA");
+    	printf("FULL MOON FULL LIFE\n");
 	}
     else {
         printf("Nada para interagir aqui.\n");
@@ -283,7 +283,7 @@ void Interact3() {
         printf("Voce abriu a porta e concluiu a fase!\n");
         exit(0);
     }else if(mapa3[newPlayer.PlayerY][newPlayer.PlayerX] == 'O'){
-    	printf("PROCURO AMOR RECIPROCO");
+    	printf("ITS GOING DOWN NOW\n");
 	}
     else {
         printf("Nada para interagir aqui.\n");
@@ -475,9 +475,8 @@ void mapa3start(){
     }
 //        if (mapa3[newPlayer.][])
         if (mapa3[newPlayer.PortaY][newPlayer.PortaX] == '=' && newPlayer.PlayerX == newPlayer.PortaX && newPlayer.PlayerY == newPlayer.PortaY) {
-            printf("Parabens! Voce abriu a porta e concluiu a fase!\n");
-            system("cls");
-            chavePega = false;
+            printf("Parabens! Voce abriu a porta e concluiu a fase!\n\n");
+            printf("Depois de uma ardua jornada(ou nao), voce conseguiu escapar do calabouço! ");
             exit(0);
         }
     }
