@@ -15,6 +15,6 @@ Tutorial
     Tome cuidado! Conforme voce avanca no jogo a dificuldade ira aumentar
     
     Esteja atento com inimigos e obstaculos identificados como 'X' (inimigo nivel 1),'V' (inimigo nivel 2) e '#' (Espinhos).
-    Caso sua vida caia para 0 a fase sera reiniciada.
+    Caso sua vida caia para 0 o jogo fechará.
     
     Obs: Aperte o botao ('O') encontrado em alguma fase e descubra algo secreto :)
